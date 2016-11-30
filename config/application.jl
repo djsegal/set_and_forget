@@ -27,12 +27,12 @@ addprocs( max(0, Sys.CPU_CORES-nprocs()) )
   @export_all_except
 
   function main()
-    gc_enable(false) #Disable garbage collector for timing purposes
+    gc_enable(false)
 
-    r, s = @setup_procs
+    r , s = @setup_procs
     n_run = Int( max(1, 5 - floor(n/1000)) )
 
-    t_ser = @time_function n_run prefix_serial!(s, *)
+    t_ser = @time_function n_run        prefix_serial!(  s, *)
     t_par = @time_function n_run @sync( prefix_parallel!(r, *) )
 
     println( t_ser / t_par )
