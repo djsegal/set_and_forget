@@ -4,27 +4,11 @@ addprocs( max(0, Sys.CPU_CORES-nprocs()) )
 
 @everywhere module Application
 
-  is_worker = false
   try
-    include("input.jl")
+    include("bootstrap.jl")
   catch
-    is_worker = true
+    include("config/bootstrap.jl")
   end
-  base_dir = is_worker ? "config" : "."
-
-  include("$base_dir/input.jl")
-  include("$base_dir/include_all.jl")
-  include("$base_dir/export_all_except.jl")
-
-  ordered_dirs_included = [
-    "vendor", "config/initializers", "lib",
-    "app/methods", "app/functions", "app/macros"
-  ]
-
-  for included_dir in ordered_dirs_included
-    include_all(included_dir, is_worker ? "." : "..")
-  end
-  @export_all_except
 
   function main()
     gc_enable(false)
