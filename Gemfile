@@ -1,5 +1,1 @@
 # julia project gems
-
-gem "IJulia"
-
-gem "AWS"
