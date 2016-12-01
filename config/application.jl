@@ -5,9 +5,9 @@ addprocs( max(0, Sys.CPU_CORES-nprocs()) )
 @everywhere module Application
 
   try
-    include("bootstrap.jl")
+    include("bootload.jl")
   catch
-    include("config/bootstrap.jl")
+    include("config/bootload.jl")
   end
 
   function main()
